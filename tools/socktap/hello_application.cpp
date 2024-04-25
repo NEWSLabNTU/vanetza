@@ -7,8 +7,8 @@
 
 using namespace vanetza;
 
-HelloApplication::HelloApplication(boost::asio::io_service& io, std::chrono::milliseconds interval) :
-    timer_(io), interval_(interval)
+HelloApplication::HelloApplication(boost::asio::io_service& io, std::chrono::milliseconds interval, std::string buff) :
+    timer_(io), interval_(interval), buff(buff)
 {
     schedule_timer();
 }
@@ -33,7 +33,8 @@ void HelloApplication::on_timer(const boost::system::error_code& ec)
 {
     if (ec != boost::asio::error::operation_aborted) {
         DownPacketPtr packet { new DownPacket() };
-        packet->layer(OsiLayer::Application) = ByteBuffer { 0xC0, 0xFF, 0xEE };
+        
+        packet->layer(OsiLayer::Application) = buff;
         DataRequest request;
         request.transport_type = geonet::TransportType::SHB;
         request.communication_profile = geonet::CommunicationProfile::ITS_G5;
@@ -42,7 +43,7 @@ void HelloApplication::on_timer(const boost::system::error_code& ec)
         if (!confirm.accepted()) {
             throw std::runtime_error("Hello application data request failed");
         }
-
+        throw std::runtime_error("Finish");
         schedule_timer();
     }
 }
