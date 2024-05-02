@@ -25,6 +25,7 @@ set(CXX_SOURCES
     tcp_link.cpp
     time_trigger.cpp
     udp_link.cpp
+    btpb_write.cpp
 )
 add_vanetza_component(btp_write ${CXX_SOURCES})
 target_link_libraries(btp_write PUBLIC Boost::system Boost::program_options Threads::Threads vanetza)
@@ -58,11 +59,11 @@ if(SOCKTAP_WITH_COHDA_LLC)
     target_sources(btp_write PRIVATE cohda.cpp cohda_link.cpp)
 endif()
 
-find_package(GPS QUIET)
-option(SOCKTAP_WITH_GPSD "Enable gpsd positioning for socktap" ${GPS_FOUND})
-if(SOCKTAP_WITH_GPSD)
-    find_package(GPS REQUIRED)
-    target_compile_definitions(btp_write PUBLIC "SOCKTAP_WITH_GPSD")
-    target_link_libraries(btp_write PUBLIC GPS::GPS)
-    target_sources(btp_write PRIVATE gps_position_provider.cpp)
-endif()
+# find_package(GPS QUIET)
+# option(SOCKTAP_WITH_GPSD "Enable gpsd positioning for socktap" ${GPS_FOUND})
+# if(SOCKTAP_WITH_GPSD)
+#     find_package(GPS REQUIRED)
+#     target_compile_definitions(btp_write PUBLIC "SOCKTAP_WITH_GPSD")
+#     target_link_libraries(btp_write PUBLIC GPS::GPS)
+#     target_sources(btp_write PRIVATE gps_position_provider.cpp)
+# endif()
