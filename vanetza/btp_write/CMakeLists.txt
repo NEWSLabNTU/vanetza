@@ -26,6 +26,8 @@ set(CXX_SOURCES
     time_trigger.cpp
     udp_link.cpp
     btpb_write.cpp
+    read_application.cpp
+    btpb_read.cpp
 )
 add_vanetza_component(btp_write ${CXX_SOURCES})
 target_link_libraries(btp_write PUBLIC Boost::system Boost::program_options Threads::Threads vanetza)
