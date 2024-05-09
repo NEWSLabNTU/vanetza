@@ -1,5 +1,6 @@
 
-
+#ifndef HELLO_APPLICATION_HPP_EUIC2VFR
+#define HELLO_APPLICATION_HPP_EUIC2VFR
 #include "application.hpp"
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/steady_timer.hpp>
@@ -18,4 +19,5 @@ private:
     boost::asio::steady_timer timer_;
     std::chrono::milliseconds interval_;
 };
+#endif /* HELLO_APPLICATION_HPP_EUIC2VFR */
 
