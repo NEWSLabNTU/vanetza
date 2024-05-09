@@ -34,8 +34,4 @@ using PromiscuousHook = vanetza::btp::PortDispatcher::PromiscuousHook;
 using UpPacketPtr = vanetza::geonet::Router::UpPacketPtr;
 
 
-
-
-
-
-int btpb_read(std::string interface ,std::string &buff) {}
+int btpb_read(std::string interface ,std::string &buff);
