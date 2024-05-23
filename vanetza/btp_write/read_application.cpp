@@ -5,8 +5,8 @@
 // This is a very simple application that sends BTP-B messages with the content 0xc0ffee.
 
 using namespace vanetza;
-ReadApplication::ReadApplication(boost::asio::io_service& io, std::chrono::milliseconds interval) :
-    timer_(io), interval_(interval)
+ReadApplication::ReadApplication(boost::asio::io_service& io, std::chrono::milliseconds interval, std::vector<uint8_t> *buf) :
+    timer_(io), interval_(interval), buff_(buf)
 {
     schedule_timer();
 }
@@ -21,13 +21,14 @@ void ReadApplication::indicate(const DataIndication& indication, UpPacketPtr pac
     
     vanetza::CohesivePacket* p = boost::get<vanetza::CohesivePacket>(packet.get());
     vanetza::ByteBuffer buff = p->buffer();
-    std::string recv = "";
-    for (int i = 40; i < buff.size(); i++) {
-        recv = recv + char(buff[i]);
-    }
-    recv = recv + "\0";
+    buff_->assign(buff.begin(), buff.end());
+    // std::string recv = "";
+    // for (int i = 40; i < buff.size(); i++) {
+    //     recv = recv + char(buff[i]);
+    // }
+    // recv = recv + "\0";
     //std::cout << "Packet content: " << p->buffer() << std::endl;
-    throw std::runtime_error(recv);
+    throw std::runtime_error("received packet");
 
 }
 

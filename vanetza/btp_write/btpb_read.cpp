@@ -38,7 +38,7 @@ using UpPacketPtr = vanetza::geonet::Router::UpPacketPtr;
 
 
 
-int btpb_read(std::string interface ,std::string &buff) {
+int btpb_read(std::string interface ,std::vector<uint8_t> *buff) {
     po::options_description options("Allowed options");
     options.add_options()
         ("help", "Print out available options.")
@@ -153,7 +153,7 @@ int btpb_read(std::string interface ,std::string &buff) {
 
         std::map<std::string, std::unique_ptr<Application>> apps;
         std::unique_ptr<ReadApplication> read {
-            new ReadApplication(io_service, std::chrono::milliseconds(800))
+            new ReadApplication(io_service, std::chrono::milliseconds(800),buff)
         };
         apps.emplace("read", std::move(read));
 
@@ -168,7 +168,6 @@ int btpb_read(std::string interface ,std::string &buff) {
         return 1;
     } catch (std::exception& e) {
         std::cerr << "Exit: " << e.what() << std::endl;
-        buff = e.what();
         return 1;
     }
 

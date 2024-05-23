@@ -38,4 +38,4 @@ using UpPacketPtr = vanetza::geonet::Router::UpPacketPtr;
 
 
 
-int btpb_write(std::string interface , std::string buf);
+int btpb_write(std::string interface , void *buf, size_t len);

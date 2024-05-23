@@ -189,6 +189,6 @@
 #include "vanetza/btp_write/btpb_write.hpp"
 
 int main (){
-    btpb_write("lo","happy");
-    return 0;
+    // btpb_write("lo","happy");
+    // return 0;
 }

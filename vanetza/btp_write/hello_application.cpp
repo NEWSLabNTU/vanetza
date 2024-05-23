@@ -2,13 +2,13 @@
 #include <chrono>
 #include <functional>
 #include <iostream>
-
+#include <vector>
 // This is a very simple application that sends BTP-B messages with the content 0xc0ffee.
 
 using namespace vanetza;
 
-HelloApplication::HelloApplication(boost::asio::io_service& io, std::chrono::milliseconds interval, std::string buff) :
-    timer_(io), interval_(interval), buff(buff)
+HelloApplication::HelloApplication(boost::asio::io_service& io, std::chrono::milliseconds interval, void *buf, size_t len) :
+    timer_(io), interval_(interval), buff_(buf),len_(len)
 {
     schedule_timer();
 }
@@ -33,8 +33,14 @@ void HelloApplication::on_timer(const boost::system::error_code& ec)
 {
     if (ec != boost::asio::error::operation_aborted) {
         DownPacketPtr packet { new DownPacket() };
+        std::vector<unsigned char> buffer = std::vector<unsigned char>(len_);
+        // printf("%02x/n",*(unsigned char*)buff_);
+        // for (int i = 0; i < len_; i++) {
+        //     printf("%02x ", (((unsigned char*)buff_)[i]));
+        // }
         
-        packet->layer(OsiLayer::Application) = buff;
+        memcpy(buffer.data(), buff_, len_);
+        packet->layer(OsiLayer::Application) = std::move(buffer);
         DataRequest request;
         request.transport_type = geonet::TransportType::SHB;
         request.communication_profile = geonet::CommunicationProfile::ITS_G5;

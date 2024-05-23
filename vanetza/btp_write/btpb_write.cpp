@@ -38,7 +38,7 @@ using UpPacketPtr = vanetza::geonet::Router::UpPacketPtr;
 
 
 
-int btpb_write(std::string interface , std::string buf) {
+int btpb_write(std::string interface , void *buf, size_t len) {
     po::options_description options("Allowed options");
     options.add_options()
         ("help", "Print out available options.")
@@ -153,7 +153,7 @@ int btpb_write(std::string interface , std::string buf) {
 
         std::map<std::string, std::unique_ptr<Application>> apps;
         std::unique_ptr<HelloApplication> hello {
-            new HelloApplication(io_service, std::chrono::milliseconds(800),buf)
+            new HelloApplication(io_service, std::chrono::milliseconds(800),buf,len)
         };
         apps.emplace("hello", std::move(hello));
 
