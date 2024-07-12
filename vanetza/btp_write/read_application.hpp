@@ -1,6 +1,5 @@
+#pragma once
 
-#ifndef HELLO_APPLICATION_HPP_EUIC2VFR
-#define HELLO_APPLICATION_HPP_EUIC2VFR
 #include "application.hpp"
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/steady_timer.hpp>
@@ -21,5 +20,4 @@ private:
 
     std::vector<uint8_t> *buff_;
 };
-#endif /* HELLO_APPLICATION_HPP_EUIC2VFR */
 

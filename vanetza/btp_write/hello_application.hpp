@@ -1,5 +1,4 @@
-#ifndef HELLO_APPLICATION_HPP_EUIC2VFR
-#define HELLO_APPLICATION_HPP_EUIC2VFR
+#pragma once
 
 #include "application.hpp"
 #include <boost/asio/io_service.hpp>
@@ -22,5 +21,3 @@ private:
     void *buff_;
     size_t len_;
 };
-
-#endif /* HELLO_APPLICATION_HPP_EUIC2VFR */
